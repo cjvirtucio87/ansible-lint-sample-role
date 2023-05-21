@@ -1,0 +1,13 @@
+---
+- name: create user
+  ansible.builtin.user:
+    name: foo
+  become: true
+  register: foo_created_user
+
+- name: setup rc file
+  ansible.builtin.template:
+    src: templates/.foorc.j2
+    dest: "{{ foo_created_user.home }}/.foorc"
+  vars:
+    foo_bar: "{{ roles_foo_home_dir }}"
